@@ -18,13 +18,15 @@ export class Counter extends Component {
   render () {
     return (
       <div>
-        <h1>Counter</h1>
+        {/*<h1>Counter</h1>
 
         <p>This is a simple example of a React component.</p>
 
         <p>Current count: <strong>{this.state.currentCount}</strong></p>
 
         <button className="btn btn-primary" onClick={this.incrementCounter}>Increment</button>
+        */}
+        <iframe src="https://open.spotify.com/embed/album/1DFixLWuPkv3KT3TnV35m3" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
       </div>
     );
   }

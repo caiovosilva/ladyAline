@@ -49,11 +49,13 @@ export class Home extends Component {
       },
       success: (data) => {
         console.log("data", data);
-        this.setState({
-          item: data.item,
-          is_playing: data.is_playing,
-          progress_ms: data.progress_ms,
-        });
+        if(data!=undefined){
+          this.setState({
+            item: data.item,
+            is_playing: data.is_playing,
+            progress_ms: data.progress_ms,
+          });
+        }
       }
     });
   }
