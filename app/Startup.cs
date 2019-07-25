@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using database.models;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Serialization;
 
 namespace app
 {
@@ -22,7 +23,12 @@ namespace app
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+            .AddJsonOptions(options => {
+                var resolver = options.SerializerSettings.ContractResolver;
+                if(resolver != null)
+                    (resolver as DefaultContractResolver).NamingStrategy = null;
+            });
             services.AddDbContext<FavoriteArtistContext>(options =>
             options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             // In production, the React files will be served from this directory
