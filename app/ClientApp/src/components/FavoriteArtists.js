@@ -11,9 +11,7 @@ export class FavoriteArtists extends Component {
       artists: [],
       loading: true,
       newArtistModal: false,
-      newArtistData: {
-        name: ''
-      }
+      newArtistName: ''
     };
 
     fetch('api/FavoriteArtists')
@@ -63,10 +61,10 @@ export class FavoriteArtists extends Component {
       <Modal isOpen={this.state.newArtistModal} toggle={this.toggleNewFavoriteArtistModal.bind(this)}>
         <ModalHeader toggle={this.toggleNewFavoriteArtistModal.bind(this)}>Adicionar Novo Artista Favorito</ModalHeader>
         <ModalBody>
-          <Input placeholder="Nome do Artista" value={this.state.newArtistData.name} onChange={(e) => {
-            let newArtistData = this.state;
-            newArtistData.name = e.target.value;
-            this.setState({newArtistData});
+          <Input placeholder="Nome do Artista" value={this.state.newArtistName} onChange={(e) => {
+            let newArtistName = this.state.newArtistName;
+            newArtistName = e.target.value;
+            this.setState({newArtistName: newArtistName});
           }}/>
         </ModalBody>
         <ModalFooter>
@@ -80,10 +78,16 @@ export class FavoriteArtists extends Component {
 
   addArtist(){
     const artist = {
-      name: this.state.newArtistData.name
+      name: this.state.newArtistName
     };
-    axios.post('api/FavoriteArtists', {artist}).then((response) => {
-      console.log(response.data);
+    axios.post('api/FavoriteArtists', artist).then((response) => {
+      let { artists } = this.state;
+      artists.push(response.data);
+      this.setState({
+        artists,
+        newArtistModal:false,
+        newArtistName:''
+      });
     });
   }
 
