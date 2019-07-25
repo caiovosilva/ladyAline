@@ -12,8 +12,8 @@ namespace database.models
         [Key]
         public int id {get;set;}
         [Required]
-        [Column(TypeName="nvarchar(200)")]
-        public int name {get;set;}
+        [Column(TypeName="character varying(200)")]
+        public string name {get;set;}
 
     }
 }

@@ -3,7 +3,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace app.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitalCreation : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,7 +13,7 @@ namespace app.Migrations
                 {
                     id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    name = table.Column<int>(type: "nvarchar(200)", nullable: false)
+                    name = table.Column<string>(type: "character varying(200)", nullable: false)
                 },
                 constraints: table =>
                 {

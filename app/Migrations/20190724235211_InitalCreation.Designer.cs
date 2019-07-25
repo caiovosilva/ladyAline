@@ -9,8 +9,8 @@ using database.models;
 namespace app.Migrations
 {
     [DbContext(typeof(FavoriteArtistContext))]
-    [Migration("20190724133755_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20190724235211_InitalCreation")]
+    partial class InitalCreation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -25,8 +25,10 @@ namespace app.Migrations
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("name")
-                        .HasColumnType("nvarchar(200)");
+                    b.Property<string>("name")
+                        .IsRequired()
+                        .HasConversion(new ValueConverter<string, string>(v => default(string), v => default(string), new ConverterMappingHints(size: 64)))
+                        .HasColumnType("character varying(200)");
 
                     b.HasKey("id");
 

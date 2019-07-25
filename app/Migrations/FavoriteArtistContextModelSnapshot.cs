@@ -23,8 +23,10 @@ namespace app.Migrations
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("name")
-                        .HasColumnType("nvarchar(200)");
+                    b.Property<string>("name")
+                        .IsRequired()
+                        .HasConversion(new ValueConverter<string, string>(v => default(string), v => default(string), new ConverterMappingHints(size: 64)))
+                        .HasColumnType("character varying(200)");
 
                     b.HasKey("id");
 
