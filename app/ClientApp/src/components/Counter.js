@@ -26,7 +26,7 @@ export class Counter extends Component {
 
         <button className="btn btn-primary" onClick={this.incrementCounter}>Increment</button>
         */}
-        <iframe src="https://open.spotify.com/embed/playlist/7bVqTuKmhV0JYaFvWMn4Ud?si=cb8GUtNhTqqoWFvxMcYT5Q" width="600" height="480" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+        <iframe title="spotifyPlayer" className="spotifyPlayer" src="https://open.spotify.com/embed/playlist/7bVqTuKmhV0JYaFvWMn4Ud?si=cb8GUtNhTqqoWFvxMcYT5Q" width="600" height="480" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
       </div>
     );
   }
