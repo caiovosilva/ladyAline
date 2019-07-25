@@ -10,6 +10,7 @@ namespace database.models
     public class FavoriteArtist
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id {get;set;}
         [Required]
         [Column(TypeName="character varying(200)")]

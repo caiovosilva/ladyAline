@@ -73,8 +73,13 @@ namespace app.Controllers
 
         // POST: api/FavoriteArtists
         [HttpPost]
-        public async Task<ActionResult<FavoriteArtist>> PostFavoriteArtist(FavoriteArtist favoriteArtist)
+        public async Task<ActionResult<FavoriteArtist>> PostFavoriteArtist([FromBody] FavoriteArtist favoriteArtist)
         {
+            if (favoriteArtist is null)
+            {
+                throw new ArgumentNullException(nameof(favoriteArtist));
+            }
+
             _context.FavoriteArtists.Add(favoriteArtist);
             await _context.SaveChangesAsync();
 

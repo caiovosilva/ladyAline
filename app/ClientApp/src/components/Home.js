@@ -68,7 +68,7 @@ export class Home extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           {!this.state.token && (
             <a
-              className="btn btn--loginApp-link"
+              className="btn btn--login App-link"
               href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join(
                 "%20"
               )}&response_type=token&show_dialog=true`}
