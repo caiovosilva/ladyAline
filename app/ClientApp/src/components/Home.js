@@ -49,7 +49,7 @@ export class Home extends Component {
       },
       success: (data) => {
         console.log("data", data);
-        if(data!=undefined){
+        if(data!==undefined){
           this.setState({
             item: data.item,
             is_playing: data.is_playing,
