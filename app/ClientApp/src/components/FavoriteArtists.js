@@ -46,7 +46,7 @@ export class FavoriteArtists extends Component {
               <td>{artist.name}</td>
               <td>
                 <Button color='success' className='mr-2' onClick={this.toggleEditFavoriteArtistModal.bind(this, artist.id, artist.name)}>Editar</Button>
-                <Button color="danger">Excluir</Button>
+                <Button color="danger" onClick={this.deleteArtist.bind(this, artist.id)}>Excluir</Button>
               </td>
             </tr>
             )}
@@ -54,6 +54,12 @@ export class FavoriteArtists extends Component {
         </Table>
       </div> 
     );
+  }
+
+  deleteArtist(id){
+    axios.delete('api/FavoriteArtists/'+id).then((response) => {
+      this.fillTable();
+    })
   }
 
   editArtist() {
