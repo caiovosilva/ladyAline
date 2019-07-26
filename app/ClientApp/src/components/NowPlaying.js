@@ -4,10 +4,10 @@ import { authEndpoint, clientId, redirectUri, scopes } from "./Config";
 import hash from "./Hash";
 import Player from "./Player";
 import logo from "./logo.svg";
-import "./Home.css";
+import "./NowPlaying.css";
 
-export class Home extends Component {
-  static displayName = Home.name;
+export class NowPlaying extends Component {
+  static displayName = NowPlaying.name;
 
   constructor() {
     super();
@@ -19,10 +19,8 @@ export class Home extends Component {
         },
         name: "",
         artists: [{ name: "" }],
-        duration_ms:0,
       },
       is_playing: "Paused",
-      progress_ms: 0
     };
     this.getCurrentlyPlaying = this.getCurrentlyPlaying.bind(this);
   }
@@ -51,7 +49,6 @@ export class Home extends Component {
           this.setState({
             item: data.item,
             is_playing: data.is_playing,
-            progress_ms: data.progress_ms,
           });
         }
       }
@@ -78,7 +75,6 @@ export class Home extends Component {
             <Player
               item={this.state.item}
               is_playing={this.state.is_playing}
-              progress_ms={this.progress_ms}
             />
           )}
         </header>
@@ -87,4 +83,4 @@ export class Home extends Component {
   }
 }
 
-export default Home;
+export default NowPlaying;
