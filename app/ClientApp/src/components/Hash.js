@@ -1,4 +1,4 @@
-// Get the hash of the url
+// Pega a hasg da url
 const hash = window.location.hash
   .substring(1)
   .split("&")

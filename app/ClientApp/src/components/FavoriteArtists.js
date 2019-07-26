@@ -21,6 +21,20 @@ export class FavoriteArtists extends Component {
     this.fillTable();
   }
 
+  render () {
+    let contents = this.state.loading
+      ? <p><em>Loading...</em></p>
+      : this.renderArtistsTable();
+    return (
+      <div>
+        <h1>Aqui está a lista de seus artistas favoritos!</h1>
+        {this.renderEditArtist()}
+        {this.renderNewArtistsModal()}
+        {contents}
+      </div>
+    );
+  }
+
   fillTable(){
     fetch('api/FavoriteArtists')
     .then(response => response.json())
@@ -35,14 +49,12 @@ export class FavoriteArtists extends Component {
         <Table>
           <thead>
             <tr>
-              <th>#</th>
               <th>Nome</th>
             </tr>
           </thead>
           <tbody>
             {this.state.artists.map(artist =>
             <tr key={artist.id}>
-              <td>{artist.id}</td>
               <td>{artist.name}</td>
               <td>
                 <Button color='success' className='mr-2' onClick={this.toggleEditFavoriteArtistModal.bind(this, artist.id, artist.name)}>Editar</Button>
@@ -62,7 +74,7 @@ export class FavoriteArtists extends Component {
     })
   }
 
-  editArtist() {
+  renderEditArtist() {
     return (
       <div>
       <Modal isOpen={this.state.editArtistModal} toggle={this.toggleEditFavoriteArtistModal.bind(this)}>
@@ -155,21 +167,5 @@ export class FavoriteArtists extends Component {
         }
       });
     });
-  }
-
-  render () {
-    let contents = this.state.loading
-      ? <p><em>Loading...</em></p>
-      : this.renderArtistsTable();
-    let newArtmodal = this.renderNewArtistsModal();
-    let editArtistModal = this.editArtist();
-    return (
-      <div>
-        <h1>Aqui está a lista de seus artistas favoritos!</h1>
-        {editArtistModal}
-        {newArtmodal}
-        {contents}
-      </div>
-    );
   }
 }
