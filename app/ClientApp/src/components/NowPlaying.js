@@ -4,6 +4,8 @@ import { authEndpoint, clientId, redirectUri, scopes } from "./Config";
 import hash from "./Hash";
 import Player from "./Player";
 import "./NowPlaying.css";
+import { Button } from 'reactstrap';
+
 
 
 export class NowPlaying extends Component {
@@ -20,10 +22,12 @@ export class NowPlaying extends Component {
         name: "",
         artists: [{ name: "" }],
       },
-      is_playing: "Paused",
+      is_playing: false,
     };
+    this.handlePlayPause = this.handlePlayPause.bind(this);
     this.getCurrentlyPlaying = this.getCurrentlyPlaying.bind(this);
   }
+
   componentDidMount() {
     // inicializando o  token
     let _token = hash.access_token;
@@ -33,6 +37,25 @@ export class NowPlaying extends Component {
       });
       this.getCurrentlyPlaying(_token);
     }
+  }
+
+  handlePlayPause (){
+    let url = null;
+    if (this.state.is_playing)
+      url = "https://api.spotify.com/v1/me/player/pause";
+    else 
+      url = "https://api.spotify.com/v1/me/player/play";
+    
+    $.ajax({
+      url: url,
+      type: "PUT",
+      beforeSend: (xhr) => {
+        xhr.setRequestHeader("Authorization", "Bearer " + hash.access_token);
+      },
+      success: (data) => {
+        this.setState({is_playing: !this.state.is_playing})
+      }
+    });  
   }
 
   getLastPlayed(token) {
@@ -46,7 +69,7 @@ export class NowPlaying extends Component {
         if(data!==undefined){
           this.setState({
             item: data.items[0].track,
-            is_playing: data.false,
+            is_playing: data.is_playing,
           });
         }
       }
@@ -75,7 +98,6 @@ export class NowPlaying extends Component {
   }
 
   render() {
-
     return (
       <div className="App">
         <header className="App-header">
@@ -89,14 +111,19 @@ export class NowPlaying extends Component {
               Login com Spotify
             </a>
           )}
-          {this.state.token && (
+          {(this.state.token) && (
+            <div>
             <Player
               item={this.state.item}
               is_playing={this.state.is_playing}
-              token={this.state.token}
             />
-          )}
+            <Button className="play-pause"color="secondary" onClick={this.handlePlayPause}>Play/Pause</Button>
+            </div>
+          )}           
+
         </header>
+        <body>
+        </body>
       </div>
     );
   }
