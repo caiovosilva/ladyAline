@@ -3,8 +3,8 @@ import * as $ from "jquery";
 import { authEndpoint, clientId, redirectUri, scopes } from "./Config";
 import hash from "./Hash";
 import Player from "./Player";
-import logo from "./logo.svg";
 import "./NowPlaying.css";
+
 
 export class NowPlaying extends Component {
   static displayName = NowPlaying.name;
@@ -40,29 +40,15 @@ export class NowPlaying extends Component {
       url: "https://api.spotify.com/v1/me/player/recently-played",
       type: "GET",
       beforeSend: (xhr) => {
-        xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
-        xhr.setRequestHeader('Access-Control-Allow-Credentials', 'true');
-        xhr.setRequestHeader('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT,DELETE');
-        res.setHeader("Access-Control-Allow-Headers",
-          "Access-Control-Allow-Headers, 
-          Origin, 
-          Accept, 
-          X-Requested-With, 
-          Content-Type, 
-          Access-Control-Request-Method, 
-          Access-Control-Request-Headers, 
-          Authorization")
         xhr.setRequestHeader("Authorization", "Bearer " + hash.access_token);
-        xhr.setRequestHeader("limit", "1");
       },
       success: (data) => {
-        console.log("data", data);
-        // if(data!==undefined){
-        //   this.setState({
-        //     item: data.item,
-        //     is_playing: data.is_playing,
-        //   });
-        // }
+        if(data!==undefined){
+          this.setState({
+            item: data.items[0].track,
+            is_playing: data.false,
+          });
+        }
       }
     });
   }
@@ -93,7 +79,6 @@ export class NowPlaying extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
           {!this.state.token && (
             <a
               className="btn btn--login App-link"
@@ -101,7 +86,7 @@ export class NowPlaying extends Component {
                 "%20"
               )}&response_type=token&show_dialog=true`}
             >
-              Login to Spotify
+              Login com Spotify
             </a>
           )}
           {this.state.token && (
