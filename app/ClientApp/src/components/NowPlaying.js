@@ -35,8 +35,39 @@ export class NowPlaying extends Component {
     }
   }
 
+  getLastPlayed(token) {
+    $.ajax({
+      url: "https://api.spotify.com/v1/me/player/recently-played",
+      type: "GET",
+      beforeSend: (xhr) => {
+        xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+        xhr.setRequestHeader('Access-Control-Allow-Credentials', 'true');
+        xhr.setRequestHeader('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT,DELETE');
+        res.setHeader("Access-Control-Allow-Headers",
+          "Access-Control-Allow-Headers, 
+          Origin, 
+          Accept, 
+          X-Requested-With, 
+          Content-Type, 
+          Access-Control-Request-Method, 
+          Access-Control-Request-Headers, 
+          Authorization")
+        xhr.setRequestHeader("Authorization", "Bearer " + hash.access_token);
+        xhr.setRequestHeader("limit", "1");
+      },
+      success: (data) => {
+        console.log("data", data);
+        // if(data!==undefined){
+        //   this.setState({
+        //     item: data.item,
+        //     is_playing: data.is_playing,
+        //   });
+        // }
+      }
+    });
+  }
+
   getCurrentlyPlaying(token) {
-    // Make a call using the token
     $.ajax({
       url: "https://api.spotify.com/v1/me/player",
       type: "GET",
@@ -44,12 +75,14 @@ export class NowPlaying extends Component {
         xhr.setRequestHeader("Authorization", "Bearer " + token);
       },
       success: (data) => {
-        console.log("data", data);
         if(data!==undefined){
           this.setState({
             item: data.item,
             is_playing: data.is_playing,
           });
+        }
+        else {
+          this.getLastPlayed();
         }
       }
     });
@@ -75,6 +108,7 @@ export class NowPlaying extends Component {
             <Player
               item={this.state.item}
               is_playing={this.state.is_playing}
+              token={this.state.token}
             />
           )}
         </header>
